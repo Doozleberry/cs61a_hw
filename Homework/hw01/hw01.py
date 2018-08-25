@@ -1,3 +1,6 @@
+""" Homework 1: Control """
+
+# Q1
 from operator import add, sub
 
 def a_plus_abs_b(a, b):
@@ -8,13 +11,13 @@ def a_plus_abs_b(a, b):
     >>> a_plus_abs_b(2, -3)
     5
     """
-
     if b < 0:
-        f = lambda a,b: sub(a,b)
+        f = sub
     else:
-        f = lambda a,b: add(a,b)
-    return f(a,b)
+        f = add
+    return f(a, b)
 
+# Q2
 def two_of_three(a, b, c):
     """Return x*x + y*y, where x and y are the two largest members of the
     positive numbers a, b, and c.
@@ -27,9 +30,12 @@ def two_of_three(a, b, c):
     164
     >>> two_of_three(5, 5, 5)
     50
+    >>> two_of_three(5,6,5)
+    61
     """
-    return max(a, b)**2 + max(b, c)**2
+    return max(a,b)**2 + min(max(a,c), max(b,c))**2
 
+# Q3
 def largest_factor(n):
     """Return the largest factor of n that is smaller than n.
 
@@ -41,17 +47,13 @@ def largest_factor(n):
     1
     """
     "*** YOUR CODE HERE ***"
-    k = n//2
-    def find_factors(n,k):
-        if k == 0:
-            return 1
-        r = n % k
-        if r == 0:
-            return k
-        else:
-            return find_factors(n, k - 2)
-    return find_factors(n,k)
+    gcf = n//2
+    while n%gcf != 0:
+        gcf -= 1
+    return gcf
 
+
+# Q4
 def if_function(condition, true_result, false_result):
     """Return true_result if condition is a true value, and
     false_result otherwise.
@@ -73,8 +75,10 @@ def if_function(condition, true_result, false_result):
 
 def with_if_statement():
     """
-    >>> with_if_statement()
-    1
+    >>> result = with_if_statement()
+    2
+    >>> print(result)
+    None
     """
     if c():
         return t()
@@ -82,26 +86,30 @@ def with_if_statement():
         return f()
 
 def with_if_function():
+    """
+    >>> result = with_if_function()
+    1
+    2
+    >>> print(result)
+    None
+    """
     return if_function(c(), t(), f())
 
 def c():
     "*** YOUR CODE HERE ***"
-    c.eval = True
     return False
 
 def t():
     "*** YOUR CODE HERE ***"
-    c.eval = False
-    return 0
-
+    print(1)
+    return None
 
 def f():
     "*** YOUR CODE HERE ***"
-    if c.eval:
-        return 1
-    else:
-        return 0
+    print(2)
+    return None
 
+# Q5
 def hailstone(n):
     """Print the hailstone sequence starting at n and return its
     length.
@@ -118,17 +126,13 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
-    length = 1
+    print(n)
+    if n == 1:
+        return 1
+    elif n % 2 == 0:
+        return 1 + hailstone(n//2)
+    else:
+        return 1 + hailstone(3*n+1)
 
-    def calcHailstone(n, i):
-        if n == 1:
-            print(int(n))
-            return i
-        elif n % 2 == 0:
-            print(n)
-            return calcHailstone(int(n/2), i+1)
-        else:
-            print(n)
-            return calcHailstone(int(n*3+1), i+1)
-
-    return calcHailstone(n, length)
+# Q6
+quine = " 'quine = '*2 + '*2; ' + 'eval(quine)'*2'+'*2'";eval(quine)
